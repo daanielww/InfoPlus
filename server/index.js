@@ -5,4 +5,7 @@ app.get('/', (req, res) =>{
     res.send({hi: 'there'});
 });
 
-app.listen(5000); //express instructs node to listen to port 5000
+
+
+const PORT = process.env.PORT || 5000; //if there is an env variable that has been defined use it, default use 5000
+app.listen(PORT); //express instructs node to listen to port 5000
