@@ -1,9 +1,19 @@
 const express = require('express');
-const app = express(); //in a single project we can have multiple express application, by calling express like a function it generates a new application that representats a running express app
+const mongoose = require('mongoose');
+const keys = require('./config/keys');
+require('./services/passport');
+require('./models/User');
 
-app.get('/', (req, res) =>{
-    res.send({hi: 'there'});
-});
+mongoose.connect(keys.mongoURI);
+
+//express() is a function  returned from require('express'). express() function creates an object internally then returns it. Its not a constructor because it doesn't use the new keyword even though it returns an object.
+//function makes sense because we could have multiple express apps and if it just returns an object, due to JS require's caching we would be also refering to the same app object.
+//The export object is instead changed to be a function instead
+const app = express(); //in a single project we can have multiple express application, by calling express like a function it generates a new application that representats a running express app
+require('./routes/authRoutes')(app); //authRoutes returns a function and we immediately invoke the function and pass in app.
+
+
+
 
 
 
