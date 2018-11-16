@@ -22,20 +22,19 @@ passport.use(
         clientSecret: keys.googleClientSecret,
         callbackURL: '/auth/google/callback',
         proxy: true
-    }, 
-    (accessToken, refreshToken, profile, done) => {
-        User.findOne({ googleId: profile.id })
-            .then((existingUser) => {
-                if (existingUser) {
-                    //we already have a record with the given profile ID
-                    done(null, existingUser);
-                } else {
-                    //we don't have a user record with this ID, make a new record
-                    new User({ googleId: profile.id })
-                        .save() //"new User" creates the instance and .save() actually saves it to the database
-                        .then(user => done(null, user));  //`done` means it tells passport to proceed with the next step of the auth flow by passing in either an `error` or `auth object` like the user object. 
-                }
-            });
-    }
+    },
+        async (accessToken, refreshToken, profile, done) => {
+            const existingUser = await User.findOne({ googleId: profile.id })
+
+            if (existingUser) {
+                //we already have a record with the given profile ID
+                done(null, existingUser);
+            } else {
+                //we don't have a user record with this ID, make a new record
+                const newUser = new User({ googleId: profile.id }).save() //"new User" creates the instance and .save() actually saves it to the database
+                done(null, user);  //`done` means it tells passport to proceed with the next step of the auth flow by passing in either an `error` or `auth object` like the user object. 
+            }
+
+        }
     )
 );
