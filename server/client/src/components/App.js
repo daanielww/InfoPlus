@@ -4,9 +4,12 @@ import { connect } from 'react-redux';
 import * as actions from '../actions' //take all the actions we have defined and assign them to the actions object
 
 import Header from "./Header"
+import Landing from "./Landing"
+
+
 const Dashboard = () => <h2>Dashboard</h2>
 const SurveyNew = () => <h2>SurveyNew</h2>
-const Landing = () => <h2>Landing</h2>
+
 
 /*
 how react router works: if we go to path /surveys react-router will go through each one
