@@ -25,5 +25,6 @@ app.use(passport.session()); //need session to use cookies
 
 require('./routes/authRoutes')(app); //authRoutes returns a function and we immediately invoke the function and pass in app.
 
+//https://stackoverflow.com/questions/2100758/javascript-or-variable-assignment-explanation
 const PORT = process.env.PORT || 5000; //if there is an env variable that has been defined use it, default use 5000
 app.listen(PORT); //express instructs node to listen to port 5000
