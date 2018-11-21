@@ -19,7 +19,7 @@ matches every possible route. Ie. "/" will also be matched by /surveys. We fix t
 // "exact={true}" and "exact" are the same. By passing in only attribute name its treated as saying the attribute is true
 class App extends Component { //for path only put the route portion of the url
     componentDidMount(){ //little difference between 'DidMount' and 'willMount' so just use 'didMount'
-        this.props.fetchUser();
+        this.props.fetchUser(); //performs fetchUser action
     }
 
     render() {

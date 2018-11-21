@@ -38,4 +38,4 @@ function mapStateToProps({auth}) {
     return {auth} //makes the key and value the same. This is the same as "auth: auth"
 }
 
-export default connect()(Header);
+export default connect(mapStateToProps)(Header);
