@@ -5,5 +5,6 @@ module.exports = {
     mongoURI: "mongodb://localhost/DataCollector",
     cookieKey: 'uqwyihdasjdhfhjwehfbwhbjdbsjfbsjbfqowieqshduqedbrehqk',
     stripePublishableKey: 'pk_test_t673ABQwOBEtKPo39kE7wPdV',
-    stripeSecretKey: 'sk_test_kv1kaZHJVSRb3ZDdt7jVYL8P'
+    stripeSecretKey: 'sk_test_kv1kaZHJVSRb3ZDdt7jVYL8P',
+    sendGridKey: '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'
 };
