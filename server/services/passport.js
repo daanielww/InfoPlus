@@ -3,12 +3,16 @@ const GoogleStrategy = require('passport-google-oauth20').Strategy;
 const mongoose = require('mongoose');
 const keys = require('../config/keys');
 
-const User = mongoose.model('users'); //1 arg means we are trying to fetch something out of mongoose. User Class declaration
+const User = mongoose.model('user'); //1 arg means we are trying to fetch something out of mongoose. User Class declaration
 
+//https://stackoverflow.com/questions/27637609/understanding-passport-serialize-deserialize
+https://stackoverflow.com/questions/28691215/when-is-the-serialize-and-deserialize-passport-method-called-what-does-it-exact
+//only called during the authentication process
 passport.serializeUser((user, done) => {
-    done(null, user.id); //puts id into cookie
+    done(null, user.id); //saves id into the sessionand cookie and is later retrieved in each request to be used to get the user object which will be attached to the req object of every request
 })
 
+//called on every request to attached the user object onto the req object
 passport.deserializeUser((id, done) => { //finds the user object corresponding to the id and attaches it to the req object for us to use 
     User.findById(id)
         .then((user) => {
