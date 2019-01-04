@@ -21,6 +21,37 @@ module.exports = app => {
 
         const p = new Path('/api/surveys/:surveyId/:choice') //creating new parser object
 
+
+        const events =  _.chain(req.body)
+        .map(req.body, ({email, url}) => {
+            const pathname = new URL(url).pathname
+            const match = p.test(pathname); 
+            if (match){
+                return {email, surveyId: match.surveyId, choice: match.choice}; //we also need the users email
+            }
+        })
+        .compact()
+        .uniqBy('email', 'surveyId')
+        .each(({surveyId, email, choice}) => {
+            Survey.updateOne({
+                _id: surveyId,
+                recipients: {
+                    $elemMatch: {
+                       email: email,
+                       responded: false 
+                    }
+                }
+            }, {
+                $inc: { [choice]: 1}, //increase the count of 'yes' or 'no' by 1. "[choice]" is es2015 syntax. Replaces [choice] at runtime with either 'yes' or 'no'. This is not creating an array
+                $set: { 'recipients.$.responded': true}
+            }).exec() //executes the statement
+        })
+        .value();
+
+        //even though updating the database is async we don't need async await because we aren't sending back the data we update. We don't need to wait for the update to finish before sending back a response.
+        res.send({}) //respond to sendgrid
+
+        /*
         //we need to use lodash's map because the req.body is an ARRAY-LIKE object. We would have to do awkward shit if we used the default map function. Lodash map can be called directly
         const events = _.map(req.body, ({email, url}) => { // if the incoming object is in JSON it is already an javascript object ready to use. the body of the req is in json so can directly use as javascript object
             const pathname = new URL(url).pathname
@@ -36,8 +67,9 @@ module.exports = app => {
         const uniqueEvents = _.uniqBy(compactEvents, 'email', 'surveyId') //can't have same email and same survey. uses both values to compare
 
         console.log(uniqueEvents);
+        */
 
-        res.send({}) //respond to sendgrid
+        
     });
 
     app.post('/api/surveys', requireLogin, requireCredits, async (req, res) => {
@@ -67,3 +99,5 @@ module.exports = app => {
         }
     });
 }
+
+
