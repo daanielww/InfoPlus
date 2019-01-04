@@ -30,6 +30,15 @@ app.use(
 //allows deserialize to be called on every incoming request to add the user object onto it
 //before passing the request onto the next appropriate route handler.
 //THATS WHY THESE COME BEFORE THE OTHER ROUTE HANDLERS. NEED TO ADD USER OBJECT BEFORE THE REQUEST CAN BE PROCESSED FURTHER
+
+//React is all client-side
+//first when authentication happens, the back-end server uses passport and serialize to attach the id into the session and cookie in the user's browser
+//cookies are stored in the browser and are sent back with every request made to the same server(domain).
+//deserialize takes the id stored in the req and finds the corresponding user object then attaches it to the req object and then sends the req to actually be processed
+
+//thats why hard mimick login status with Postman because not a browser can't really store cookies. Every request that is sent from postman, the server will consider it to be a request from a NOT logged in user
+
+//https://developer.mozilla.org/en-US/docs/Web/HTTP/Cookies
 app.use(passport.initialize()); //create instance of passport
 app.use(passport.session()); //need session to use cookies
 

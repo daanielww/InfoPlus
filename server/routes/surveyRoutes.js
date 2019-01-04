@@ -1,3 +1,7 @@
+const _= require('lodash') // by convention assig lodash to underscore
+const Path = require('path-parser').default //path parser library
+const { URL } = require('url') //builtin node library
+
 const requireLogin = require('../middlewares/requireLogin');
 const requireCredits = require('../middlewares/requireCredits');
 const mongoose = require('mongoose');
@@ -14,8 +18,27 @@ module.exports = app => {
     app.post('/api/surveys/webhooks', (req,res) => {
         console.log(req.body);
         console.log("heeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeey")
-        res.send({});
-    })
+
+        const p = new Path('/api/surveys/:surveyId/:choice') //creating new parser object
+
+        //we need to use lodash's map because the req.body is an ARRAY-LIKE object. We would have to do awkward shit if we used the default map function. Lodash map can be called directly
+        const events = _.map(req.body, ({email, url}) => { // if the incoming object is in JSON it is already an javascript object ready to use. the body of the req is in json so can directly use as javascript object
+            const pathname = new URL(url).pathname
+            //cant do destructuring of match because it might be null
+            const match = p.test(pathname); //if p.test cant extract surveyId AND choice then match will be null otherwise it contains object containing surveyId and choice values
+            if (match){
+                return {email, surveyId: match.surveyId, choice: match.choice}; //we also need the users email
+            }
+        });
+
+        //can compact all of this using LODASH CHAINING
+        const compactEvents = _.compact(events) //returns only event objects, removes all undefined;
+        const uniqueEvents = _.uniqBy(compactEvents, 'email', 'surveyId') //can't have same email and same survey. uses both values to compare
+
+        console.log(uniqueEvents);
+
+        res.send({}) //respond to sendgrid
+    });
 
     app.post('/api/surveys', requireLogin, requireCredits, async (req, res) => {
         const { title, subject, body, recipients } = req.body
