@@ -11,7 +11,7 @@ const surveyTemplate = require('../services/emailTemplates/surveyTemplates')
 const Survey = mongoose.model('surveys');
 
 module.exports = app => {
-    app.get('/api/surveys/completed', (req,res) => {
+    app.get('/api/surveys/:surveyId/:choice', (req,res) => {
         res.send('Thanks for voting!');
     });
 
@@ -32,7 +32,7 @@ module.exports = app => {
         })
         .compact()
         .uniqBy('email', 'surveyId')
-        .each(({surveyId, email, choice}) => {
+        .each(({surveyId, email, choice}) => { 
             Survey.updateOne({
                 _id: surveyId,
                 recipients: {
@@ -43,8 +43,10 @@ module.exports = app => {
                 }
             }, {
                 $inc: { [choice]: 1}, //increase the count of 'yes' or 'no' by 1. "[choice]" is es2015 syntax. Replaces [choice] at runtime with either 'yes' or 'no'. This is not creating an array
-                $set: { 'recipients.$.responded': true}
-            }).exec() //executes the statement
+                $set: { 'recipients.$.responded': true},
+                lastResponded: new Date()
+            })
+            .exec() //executes the statement
         })
         .value();
 
