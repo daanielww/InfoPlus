@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { Link } from 'react-router-dom';
 import Payments from './Payments'
-import logo from '../images/infoplus_logo.png'
+import logo from '../images/infoplus_logo.jpg'
 
 class Header extends Component {
     renderContent() {
@@ -26,7 +26,7 @@ class Header extends Component {
         console.log(this.props);
         return (
 
-            <nav class="light-blue lighten-1" role="navigation">
+            <nav class="white lighten-1" role="navigation">
                 <div class="nav-wrapper container">
                     <Link
                         to={this.props.auth ? '/surveys' : '/'}
