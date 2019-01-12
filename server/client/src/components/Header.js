@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { Link } from 'react-router-dom';
 import Payments from './Payments'
+import logo from '../images/infoplus_logo.png'
 
 class Header extends Component {
     renderContent() {
@@ -9,7 +10,7 @@ class Header extends Component {
             case null:
                 return;
             case false:
-                return <li><a href="/auth/google">Login with Google</a></li>
+                return <li><a class = "orange" href="/auth/google">Login with Google</a></li>
             default:
                 return [
                     <li key= "1"><Payments/></li>,
@@ -25,11 +26,11 @@ class Header extends Component {
         console.log(this.props);
         return (
             <nav>
-                <div className="nav-wrapper">
+                <div className="nav-wrapper grey lighten-1">
                     <Link 
                         to={ this.props.auth ? '/surveys' : '/'} 
                         className="left brand-logo">
-                        Logo
+                        <a href="#!" class="brand-logo" ><img class="logo-image" src = {logo} alt = "Logo" />Logo</a>
                     </Link>
                     <ul id="nav-mobile" className="right hide-on-med-and-down">
                         {this.renderContent()}

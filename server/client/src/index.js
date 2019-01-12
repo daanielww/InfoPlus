@@ -1,5 +1,6 @@
 //import materialize here because its starting point of application, so only needa load once
 import 'materialize-css/dist/css/materialize.min.css';
+import './style.css';
 
 import React from 'react';
 import ReactDOM from 'react-dom';
