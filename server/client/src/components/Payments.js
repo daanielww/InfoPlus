@@ -15,7 +15,7 @@ class Payments extends Component {
                 stripeKey={process.env.REACT_APP_STRIPE_KEY}
             >
 
-            <button className=" waves-effect waves-light btn">
+            <button className=" waves-effect waves-light btn blue">
                 Load Credits
             </button>
 

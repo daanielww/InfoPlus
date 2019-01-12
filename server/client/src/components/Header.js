@@ -14,10 +14,10 @@ class Header extends Component {
             default:
                 return [
                     <li key="1"><Payments /></li>,
-                    <li key="3" style={{ margin: '0 10px' }}>
+                    <li class = "orange" key="3" style={{ margin: '0 10px', padding: '0 7px'}}>
                         Credits: {this.props.auth.credits}
                     </li>,
-                    <li key="2"><a href="/api/logout">Log Out</a></li>
+                    <li class = "orange" key="2" ><a href="/api/logout">Log Out</a></li>
                 ];
         }
     }
