@@ -35,7 +35,7 @@ passport.use(
                 done(null, existingUser);
             } else {
                 //we don't have a user record with this ID, make a new record
-                const newUser = new User({ googleId: profile.id }).save() //"new User" creates the instance and .save() actually saves it to the database
+                const user = new User({ googleId: profile.id }).save() //"new User" creates the instance and .save() actually saves it to the database
                 done(null, user);  //`done` means it tells passport to proceed with the next step of the auth flow by passing in either an `error` or `auth object` like the user object. 
             }
 
