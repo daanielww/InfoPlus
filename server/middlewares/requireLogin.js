@@ -7,3 +7,7 @@ module.exports = (req, res, next) => {
 
     next(); //go onto next middleware
 };
+
+//can't fake a user login because we are attaching the user object directly onto the req object and that can only be done on our servers
+//you can't just send in a request containing a user object(even if it has all the correct info) because it will still get put in req.body and not directly on req
+//body-parser will put the body of the req into req.body so caller cannot add their own user object directly onto req

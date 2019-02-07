@@ -16,7 +16,7 @@ mongoose.connect(keys.mongoURI);
 const app = express(); //in a single project we can have multiple express application, by calling express like a function it generates a new application that representats a running express app
 
 //all middlewares wired up to express with app.use they operate on incoming requires before they are sent off to handlers
-app.use(bodyParser.json());
+app.use(bodyParser.json()); //parses the incoming text/string into JSON
 
 app.use(
     cookieSession({
