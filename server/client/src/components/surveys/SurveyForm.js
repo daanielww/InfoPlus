@@ -4,6 +4,7 @@ import React, { Component } from 'react';
 import { reduxForm, Field } from 'redux-form'; //like the "connect" helper. Allows our component to communication to with the redux store that is enclosed by provider tag
 import SurveyField from './SurveyField';
 import { Link } from 'react-router-dom'
+import validateEmails from '../../utils/validateEmails';
 
 const FIELDS = [
     { label: 'Survey Title', name: 'title' },
@@ -54,13 +55,15 @@ class SurveyForm extends Component {
 function validate(values) { //values contains all values coming off of the form
     const errors = {};
 
+    errors.emails = validateEmails(values.emails || '') //errors property doesn't care about values that have undefined assigned to it, so dont need to take care of case if all emails are valid
+
     _.each(FIELDS, ({name}) => {
         if (!values[name]) { //figure out name property dynamically bc its gonna be different
             errors[name] = 'You must provide a value'
         }
     });
 
-
+   
 
     return errors; //if reduxForm gets back Empty Errors object, it assumes everything is good otherwise, it thinks something is wrong and stops submition process. 
 }
