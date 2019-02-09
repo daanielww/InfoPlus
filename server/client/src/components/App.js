@@ -26,9 +26,11 @@ class App extends Component { //for path only put the route portion of the url
             <BrowserRouter>
                 <div>
                     <Header />
-                    <Route exact={true} path="/" component={Landing} />
-                    <Route exact={true} path="/surveys" component={Dashboard} />
-                    <Route path="/surveys/new" component={SurveyNew} />
+                    <div className="container">
+                        <Route exact={true} path="/" component={Landing} />
+                        <Route exact={true} path="/surveys" component={Dashboard} />
+                        <Route path="/surveys/new" component={SurveyNew} />
+                    </div>
                 </div>
             </BrowserRouter>
 
