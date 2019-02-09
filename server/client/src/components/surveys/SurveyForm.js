@@ -56,11 +56,12 @@ function validate(values) { //values contains all values coming off of the form
         errors.title = 'you must provide a title'
     }
 
-    
 
-    return errors; //if reduxForm gets back Empty Errors object, it assumes everything is good otherwise, it thinks something is wrong and stops submition process
+
+    return errors; //if reduxForm gets back Empty Errors object, it assumes everything is good otherwise, it thinks something is wrong and stops submition process. 
 }
 
+//if there is error, it is passed as a prop to the Field component of the same name as the key in the error object
 
 export default reduxForm({
     validate: validate,
@@ -68,3 +69,5 @@ export default reduxForm({
 })(SurveyForm);
 
 //validate function automatically run anytime the user wants to submit form
+//NOTE: validation function automatically runs right when the component renders
+//Dont want to show validation message until the user touches the field
