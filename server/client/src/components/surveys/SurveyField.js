@@ -14,7 +14,9 @@ export default ({input, label, meta:{error, touched}}) => { //rendered by the fi
         <div>
             <label>{label}</label>
             <input {...input}/>
-            {displayError(touched)}
+            <div className="red-text" style={{ marginBottom: '20px'}}>
+                {displayError(touched)}
+            </div>
         </div>
     )
 }

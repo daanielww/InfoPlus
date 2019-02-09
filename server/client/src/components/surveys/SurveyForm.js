@@ -6,10 +6,10 @@ import SurveyField from './SurveyField';
 import { Link } from 'react-router-dom'
 
 const FIELDS = [
-    {label: 'Survey Title', name: 'title'},
-    {label: 'Subject', name: 'subject'},
-    {label: 'Body', name: 'body'},
-    {label: 'Recipient List', name: 'emails'}
+    { label: 'Survey Title', name: 'title' },
+    { label: 'Subject', name: 'subject' },
+    { label: 'Body', name: 'body' },
+    { label: 'Recipient List', name: 'emails' }
 ];
 
 //have key property just to avoid errors- doesn't do anything
@@ -17,7 +17,7 @@ const FIELDS = [
 class SurveyForm extends Component {
     renderField() {
         return (
-             _.map(FIELDS, ({label, name}) => {
+            _.map(FIELDS, ({ label, name }) => {
                 return (<Field key={name} component={SurveyField} type="text" label={label} name={name} />)
             })
         );
@@ -28,14 +28,14 @@ class SurveyForm extends Component {
             <div>
                 <form onSubmit={this.props.handleSubmit(values => console.log(values))}>
                     {this.renderField()}
-                </form>
-                <Link to="/surveys" className ="red btn-flat white-text">
-                    Cancel
-                </Link>
-                <button type="submit" className = "teal btn-flat right white-text">
-                    Review
+                    <Link to="/surveys" className="red btn-flat white-text">
+                        Cancel
+                    </Link>
+                    <button type="submit" className="teal btn-flat right white-text">
+                        Review
                     <i className="material-icons right">done</i>
-                </button>
+                    </button>
+                </form>
             </div>
         );
     }
@@ -49,12 +49,16 @@ class SurveyForm extends Component {
 //"component" prop - we put html tag that takes in input such as the Input tag,we can replace with custom react component that we make that takes in input
 //"type" the type of the input tag. ie. text, filepicker, etc.
 
+
+
 function validate(values) { //values contains all values coming off of the form
     const errors = {};
 
-    if (!values.title){
-        errors.title = 'you must provide a title'
-    }
+    _.each(FIELDS, ({name}) => {
+        if (!values[name]) { //figure out name property dynamically bc its gonna be different
+            errors[name] = 'You must provide a value'
+        }
+    });
 
 
 
