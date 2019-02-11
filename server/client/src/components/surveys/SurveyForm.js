@@ -27,7 +27,7 @@ class SurveyForm extends Component {
     render() {
         return (
             <div>
-                <form onSubmit={this.props.handleSubmit(values => console.log(values))}>
+                <form onSubmit={this.props.handleSubmit(this.props.onSurveySubmit)}>
                     {this.renderField()}
                     <Link to="/surveys" className="red btn-flat white-text">
                         Cancel
@@ -42,6 +42,7 @@ class SurveyForm extends Component {
     }
 }
 
+//why do u need to pass function into handleSubmit? I think handleSubmit is from react-forms, does some stuff in background such as binding and preventDefault
 
 //any custom props put onto Field component are automatically passed onto the customer Component SurveyField by reactForms
 
