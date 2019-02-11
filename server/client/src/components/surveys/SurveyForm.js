@@ -78,3 +78,7 @@ export default reduxForm({
 //validate function automatically run anytime the user wants to submit form
 //NOTE: validation function automatically runs right when the component renders
 //Dont want to show validation message until the user touches the field
+
+//the form shows constantly updating error messages bc the component is constantly being rerendered
+//Remember we have the reduxForm reducer. So whenever we type something in the form or make changes, reduxForm
+//updates the redux state and causes rerender
