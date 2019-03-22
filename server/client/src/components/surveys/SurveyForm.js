@@ -73,8 +73,8 @@ function validate(values) { //values contains all values coming off of the form
 
 export default reduxForm({
     validate: validate,
-    form: 'surveyForm', //name of the key where the form data will be stored under in redux
-    destroyerOnUnmount: false
+    form: 'surveyForm', //name of the key where the form data will be stored under in redux under form.
+    destroyOnUnmount: false
 })(SurveyForm);
 
 //validate function automatically run anytime the user wants to submit form
