@@ -5,20 +5,14 @@ import { reduxForm, Field } from 'redux-form'; //like the "connect" helper. Allo
 import SurveyField from './SurveyField';
 import { Link } from 'react-router-dom'
 import validateEmails from '../../utils/validateEmails';
-
-const FIELDS = [
-    { label: 'Survey Title', name: 'title' },
-    { label: 'Subject', name: 'subject' },
-    { label: 'Body', name: 'body' },
-    { label: 'Recipient List', name: 'emails' }
-];
+import formFields from './formFields';
 
 //have key property just to avoid errors- doesn't do anything
 
 class SurveyForm extends Component {
     renderField() {
         return (
-            _.map(FIELDS, ({ label, name }) => {
+            _.map(formFields, ({ label, name }) => {
                 return (<Field key={name} component={SurveyField} type="text" label={label} name={name} />)
             })
         );
@@ -58,7 +52,7 @@ function validate(values) { //values contains all values coming off of the form
 
     errors.emails = validateEmails(values.emails || '') //errors property doesn't care about values that have undefined assigned to it, so dont need to take care of case if all emails are valid
 
-    _.each(FIELDS, ({name}) => {
+    _.each(formFields, ({name}) => {
         if (!values[name]) { //figure out name property dynamically bc its gonna be different
             errors[name] = 'You must provide a value'
         }
